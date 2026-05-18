@@ -2,68 +2,8 @@ fileFormatVersion: 2
 guid: 978776c6b3edc164ba82de2b742a4fbe
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: Mesh1_Group2 Group1 Model
-  - first:
-      1: 100004
-    second: Mesh2_Group3 Group1 Model
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: Mesh1_Group2 Group1 Model
-  - first:
-      4: 400004
-    second: Mesh2_Group3 Group1 Model
-  - first:
-      21: 2100000
-    second: Gold
-  - first:
-      21: 2100002
-    second: Gray8
-  - first:
-      21: 2100004
-    second: Redwood
-  - first:
-      23: 2300000
-    second: Mesh1_Group2 Group1 Model
-  - first:
-      23: 2300002
-    second: Mesh2_Group3 Group1 Model
-  - first:
-      33: 3300000
-    second: Mesh1_Group2 Group1 Model
-  - first:
-      33: 3300002
-    second: Mesh2_Group3 Group1 Model
-  - first:
-      43: 4300000
-    second: Mesh1_Group2 Group1 Model
-  - first:
-      43: 4300002
-    second: Mesh2_Group3 Group1 Model
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Gold
-    second: {fileID: 2100000, guid: 0b1a09e88ee404aeb9a7fe9516ee7a19, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Gray8
-    second: {fileID: 2100000, guid: 856d93b28b7aa416faf25b8b642232a9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Redwood
-    second: {fileID: 2100000, guid: 7c248f62c0b874ecbb44f1085d19986e, type: 2}
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,21 +30,21 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -121,11 +61,11 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
@@ -136,7 +76,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -148,19 +88,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 5
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
