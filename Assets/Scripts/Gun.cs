@@ -129,6 +129,9 @@ public class Gun : MonoBehaviour {
         bulletLineRenderer.SetPosition(0,fireTransform.position);
 
         //선의 끝점은 입력으로 들어온 충돌 위치
+        bulletLineRenderer.SetPosition(1, hitPosition);
+
+        //라인 렌더러를 활성화하여 탄알 궤적을 그림
         bulletLineRenderer.enabled=true;
 
         // 0.03초 동안 잠시 처리를 대기
