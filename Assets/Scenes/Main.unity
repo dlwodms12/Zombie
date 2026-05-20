@@ -1308,6 +1308,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7962338713964115485}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &919132147832953439 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7226690430548072010, guid: 39fce833c168d954dab143286c5b7f3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7962338713964115485}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &919132147832953441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147832953439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59ae54f97f62d844aebf692b4294dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  healthSlider: {fileID: 992289023}
+  deathClip: {fileID: 8300000, guid: 4265c953ea2b74edabac0c972182dcba, type: 3}
+  hitClip: {fileID: 8300000, guid: cbfb3a79860ac42c89b09fc131ef4b61, type: 3}
+  itemPickupClip: {fileID: 8300000, guid: 519ad2e4de69341948a938bf2a31e33b, type: 3}
 --- !u!1001 &7962338713964115485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1378,7 +1401,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 316406589}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7226690430548072010, guid: 39fce833c168d954dab143286c5b7f3a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 919132147832953441}
   m_SourcePrefab: {fileID: 100100000, guid: 39fce833c168d954dab143286c5b7f3a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
