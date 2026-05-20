@@ -32,26 +32,104 @@ public class Gun : MonoBehaviour {
 
     private void Awake() {
         // 사용할 컴포넌트의 참조 가져오기
+        gunAudioPlayer = GetComponent<AudioSource>();
+        bulletLineRenderer = GetComponent<LineRenderer>();
+        //총알 궤적이 사용할 점을 두개로 변경
+        bulletLineRenderer.positionCount = 2;
+        //라인 렌더러를 비활성화
+        bulletLineRenderer.enabled = false;
     }
 
+    //컴포넌트가 활성화 될 때마다 매 번 실행됨
     private void OnEnable() {
         // 총 상태 초기화
+        ammoRemain = gunData.startAmmoRemain;
+        // 현재 탄창을 가득 채우기
+        magAmmo = gunData.magCapacity;
+        // 총의 현재 상태를 발사 가능한 상태로 변경
+        state = State.Ready;
+        // 마지막으로 총을 쏜 시점을 초기화
+        lastFireTime = 0;
     }
 
     // 발사 시도
     public void Fire() {
+        //현재 상태가 발사 가능하고, 마지막 발사 시점에서 gunData.timeBetFire 이상의 시간이 지난 경우
+        if(state == State.Ready && Time.time >= lastFireTime + gunData.timeBetFire)
+        {
+            //마지막 총 발사 시점을 갱신
+            lastFireTime = Time.time;
+            //실제 발사 처리
+            Shot();
+        }
 
     }
 
     // 실제 발사 처리
     private void Shot() {
+        //레이캐스트에 의한 충돌 정보를 저장하는 컨테이너
+        RaycastHit hit;
+        //탄알이 맞은 곳을 저장할 변수
+        Vector3 hitPostion = Vector3.zero;
+
+        //레이캐스트(시작 지점, 방향, 충돌 정보 컨테이너, 사정거리)
+        //레이캐스트는 충돌 여부를 bool 값으로 반환하지만, out 키워드를 붙여서
+        //메서드 내부에서 변경된 사항이 반영된 채 되돌아오도록 만들 수 있음
+        if (Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance))
+        {
+            //레이가 어떤 물체와 충돌한 경우
+            //충돌한 상대방으로부터 IDamageble 오브젝트 가져오기 시도
+            IDamageable target = hit.collider.GetComponent<IDamageable>();
+
+            //가져오는데 성공했다면
+            if (target != null)
+            {
+                //상대방의 OnDamage 함수를 실행시켜 상대방에게 데미지 주기
+                target.OnDamage(gunData.damage, hit.point, hit.normal);
+            }
+
+            //레이가 충돌한 위치 저장
+            hitPostion = hit.point;
+        }
+
+        //레이가 다른 물체와 충돌하지 않았다면 최대 사정거리까지 날아갔을 때 위치를 충돌 위치로 사용
+        else
+        {
+            hitPostion = fireTransform.position + fireTransform.forward * fireDistance;
+        }
+
+        //발사 이펙트 재생
+        StartCoroutine(ShotEffect(hitPostion));
+
+        //남은 탄알 수를 -1
+        magAmmo--;
+
+        if(magAmmo <= 0)
+        {
+            //탄창에 남은 총알이 없다면 현재 상태를 Empty로 갱신
+            state = State.Empty;
+        }
       
     }
 
     // 발사 이펙트와 소리를 재생하고 탄알 궤적을 그림
+    //코루틴 메서드
     private IEnumerator ShotEffect(Vector3 hitPosition) {
-        // 라인 렌더러를 활성화하여 탄알 궤적을 그림
-        bulletLineRenderer.enabled = true;
+
+        //총구 화염 효과 재생
+        muzzleFlashEffect.Play();
+
+        //탄피 배출 효과 재생
+        shellEjectEffect.Play();
+
+        //총격 소리 재생
+        gunAudioPlayer.PlayOneShot(gunData.shotClip);
+
+        //선의 시작점은 총구의 위치
+        bulletLineRenderer.SetPosition(0,fireTransform.position);
+
+        //선의 끝점은 입력으로 들어온 충돌 위치
+        bulletLineRenderer.enabled=true;
 
         // 0.03초 동안 잠시 처리를 대기
         yield return new WaitForSeconds(0.03f);
@@ -62,16 +140,42 @@ public class Gun : MonoBehaviour {
 
     // 재장전 시도
     public bool Reload() {
-        return false;
+
+        if(state == State.Reloading || ammoRemain <= 0 || magAmmo >= gunData.magCapacity)
+        {
+            //이미 재장전 중이거나 남은 탄알이 없거나 탄창에 탄알이 가득한 경우 재장전 불가
+            return false;
+        }
+        //재장전 처리 시작
+        StartCoroutine(ReloadRoutine());
+        return true;
     }
 
     // 실제 재장전 처리를 진행
     private IEnumerator ReloadRoutine() {
         // 현재 상태를 재장전 중 상태로 전환
         state = State.Reloading;
-      
-        // 재장전 소요 시간 만큼 처리 쉬기
+
+        //재장전 소리 재생
+        gunAudioPlayer.PlayOneShot(gunData.reloadClip);
+
+        //재장전 소요 시간만큼 처리를 쉬기
         yield return new WaitForSeconds(gunData.reloadTime);
+
+        //탄창에 채울 탄알을 계산
+        int ammoToFill = gunData.magCapacity - magAmmo;
+
+        //탄창에 채워야할 탄알이 남은 탄알보다 많다면
+        //채워야 할 탄알 수를 남은 탄알 수에 맞춰 줄임
+        if(ammoRemain < ammoToFill)
+        {
+            ammoToFill = ammoRemain;
+        }
+
+        //탄창을 채움
+        magAmmo += ammoToFill;
+        //남은 탄알에서 탄창에 채운만큼 탄알을 뺌
+        ammoRemain -= ammoToFill;
 
         // 총의 현재 상태를 발사 준비된 상태로 변경
         state = State.Ready;
