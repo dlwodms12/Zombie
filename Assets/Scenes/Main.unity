@@ -1750,6 +1750,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Character
       objectReference: {fileID: 0}
+    - target: {fileID: 7226690430548072010, guid: 39fce833c168d954dab143286c5b7f3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8803713280202645613, guid: 39fce833c168d954dab143286c5b7f3a,
         type: 3}
       propertyPath: m_AnchorMax.x
